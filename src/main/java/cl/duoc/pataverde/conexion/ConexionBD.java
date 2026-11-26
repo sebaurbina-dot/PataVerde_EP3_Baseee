@@ -21,7 +21,7 @@ public class ConexionBD {
     private static final String USUARIO = "";
     private static final String CLAVE = "";
 
-    private ConexionBD() {
+    private ConexionBD(jdbc:oracle:thin:@<servidor>:<puerto>/<servicio>) {
     }
 
     /**
