@@ -1,0 +1,71 @@
+PATAVERDE - PROYECTO BASE EP3
+=============================
+
+Ejecución: clase cl.duoc.pataverde.Launcher (o mvn javafx:run).
+Mientras no asignes tu implementación de MascotaDAO, la ventana se abre
+y el área de mensajes indica que aún no hay una implementación asignada.
+
+
+ESTRUCTURA
+----------
+cl.duoc.pataverde
+  Launcher, App              Inicio de la aplicación (no modificar).
+  model/                     Mascota, Perro, Gato, Adoptable (no modificar).
+  dao/                       MascotaDAO y PersistenciaException (no modificar).
+  conexion/ConexionBD        Datos de conexión: COMPLETAR.
+  controller/MainController  Controlador de la ventana: asignar el DAO
+                             (marca "EP3"); no modificar el resto.
+resources/cl/duoc/pataverde/view
+  main-view.fxml             Ventana principal (no modificar).
+pom.xml                      Agregar el conector JDBC (marca "EP3").
+scripts/                     pataverde_mysql.sql y pataverde_oracle.sql:
+                             ejecuta el de tu motor (no modificar).
+
+
+MODELO
+------
+Mascota (abstracta)
+  int getId() / void setId(int id)          0 mientras no está almacenada.
+  String getNombre() / setNombre(String)    No nulo ni vacío.
+  int getEdad() / setEdad(int)              Entre 0 y 30.
+  double getPeso() / setPeso(double)        Mayor que cero.
+  String getTipo()                          "Perro" o "Gato".
+  double calcularCostoConsulta()            Costo de la consulta, en pesos.
+  Los set lanzan IllegalArgumentException con un mensaje si el dato es inválido.
+
+Perro extends Mascota implements Adoptable
+  Perro(String nombre, int edad, double peso, String raza,
+        boolean vacunado, boolean disponibleAdopcion)
+  String getRaza() / setRaza(String)        No nula ni vacía.
+  boolean isVacunado() / setVacunado(boolean)
+  boolean isDisponibleAdopcion() / setDisponibleAdopcion(boolean)
+  Costo: $15.000; +30% si no está vacunado.
+
+Gato extends Mascota
+  Gato(String nombre, int edad, double peso, boolean viveExterior)
+  boolean isViveExterior() / setViveExterior(boolean)
+  Costo: $12.000; +15% si vive en exterior.
+
+Adoptable (interfaz)
+  boolean isDisponibleAdopcion()
+  void setDisponibleAdopcion(boolean)
+
+
+ACCESO A DATOS
+--------------
+MascotaDAO (interfaz)
+  List<Mascota> obtenerTodos()   Todas las mascotas, cada una como Perro o Gato,
+                                 con todos sus datos y su id.
+  void insertar(Mascota m)       Guarda una mascota nueva (el id lo genera la BD).
+  void actualizar(Mascota m)     Modifica la mascota con el mismo id.
+  void eliminar(int id)          Elimina la mascota con ese id.
+  Todas lanzan PersistenciaException si la operación no puede completarse.
+
+PersistenciaException(String mensaje)
+PersistenciaException(String mensaje, Throwable causa)
+  La ventana muestra getMessage() en el área de mensajes.
+
+ConexionBD
+  static Connection getConnection() throws SQLException
+  Entrega una conexión abierta con los datos URL, USUARIO y CLAVE.
+  Quien la utiliza debe cerrarla.

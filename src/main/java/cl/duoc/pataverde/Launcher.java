@@ -1,0 +1,13 @@
+package cl.duoc.pataverde;
+
+import javafx.application.Application;
+
+/**
+ * Punto de entrada de la aplicación. Ejecuta esta clase para iniciar PataVerde.
+ */
+public class Launcher {
+
+    public static void main(String[] args) {
+        Application.launch(App.class, args);
+    }
+}
