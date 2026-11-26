@@ -1,0 +1,1 @@
+implementar capa DAO y conexión , no modificar nada mas , fijarse en la interface que el diagrama quede así , las reglas de negocios ya vienen implementadas en el código, agregar en el poom las librerías asociadas a Oracle , luego recargar el proyecto 
